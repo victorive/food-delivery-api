@@ -2,8 +2,13 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class Handler extends ExceptionHandler
 {
@@ -23,8 +28,28 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        $this->renderable(function (AuthorizationException $exception) {
+            return response()->json([
+                'message' => 'Unauthorized'
+            ], Response::HTTP_UNAUTHORIZED);
+        });
+
+        $this->renderable(function (JWTException $exception) {
+            return response()->json([
+                'message' => 'Invalid token'
+            ], Response::HTTP_UNAUTHORIZED);
+        });
+
+        $this->renderable(function (NotFoundHttpException $exception) {
+            return response()->json([
+                'message' => 'The requested resource was not found on this route.'
+            ], Response::HTTP_NOT_FOUND);
+        });
+
+        $this->renderable(function (QueryException $exception) {
+            return response()->json([
+                'message' => 'An error occurred. Please try again.'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         });
     }
 }

@@ -14,8 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
-        'passwords' => 'users',
+        'guard' => 'customer',
+        'passwords' => 'customers',
     ],
 
     /*
@@ -40,6 +40,22 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'admin' => [
+            'driver' => 'jwt',
+            'provider' => 'admins',
+        ],
+        'customer' => [
+            'driver' => 'jwt',
+            'provider' => 'customers',
+        ],
+        'restaurant' => [
+            'driver' => 'jwt',
+            'provider' => 'restaurants',
+        ],
+        'delivery-agent' => [
+            'driver' => 'jwt',
+            'provider' => 'delivery-agents',
+        ],
     ],
 
     /*
@@ -60,9 +76,21 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'admins' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\Admin::class,
+        ],
+        'customers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Customer::class,
+        ],
+        'restaurants' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Restaurant::class,
+        ],
+        'delivery-agents' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\DeliveryAgent::class,
         ],
 
         // 'users' => [
@@ -91,8 +119,26 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
+        'admins' => [
+            'provider' => 'admins',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'customers' => [
+            'provider' => 'customers',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'restaurants' => [
+            'provider' => 'restaurants',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'delivery-agents' => [
+            'provider' => 'delivery-agents',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,
