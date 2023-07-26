@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1\User;
 
+use App\Events\OrderCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\User\OrderRequest;
 use App\Services\V1\User\Auth\OrderService;
@@ -19,6 +20,8 @@ class OrderController extends Controller
         $customerId = auth('customer')->user()->id;
 
         $order = $this->orderService->createOrder($request->validated(), $customerId);
+
+        OrderCreated::dispatch($order);
 
         return response()->json([
             'status' => true,
