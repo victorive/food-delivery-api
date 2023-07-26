@@ -15,4 +15,6 @@ interface RestaurantRepository
     public function getRestaurantMenus(string $restaurantUlid, int $perPage);
 
     public function getRestaurantOrderItems(int $restaurantId);
+
+    public function update(array $attributes, $restaurantId);
 }

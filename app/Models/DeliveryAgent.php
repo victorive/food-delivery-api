@@ -22,6 +22,7 @@ class DeliveryAgent extends Authenticatable implements JWTSubject
         'state_id',
         'city_id',
         'is_available',
+        'device_token',
     ];
 
 

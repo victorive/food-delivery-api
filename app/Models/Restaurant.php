@@ -21,6 +21,7 @@ class Restaurant extends Authenticatable implements JWTSubject
         'country_id',
         'state_id',
         'city_id',
+        'device_token',
     ];
 
     protected $hidden = [

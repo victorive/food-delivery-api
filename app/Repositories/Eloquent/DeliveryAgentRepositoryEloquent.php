@@ -12,4 +12,16 @@ class DeliveryAgentRepositoryEloquent implements DeliveryAgentRepository
     {
         return DeliveryAgent::query()->create($attributes);
     }
+
+    public function findById(int $deliveryAgentId)
+    {
+        return DeliveryAgent::query()->find($deliveryAgentId);
+    }
+
+    public function update(array $attributes, $deliveryAgentId)
+    {
+        return tap($this->findById($deliveryAgentId), function ($deliveryAgent) use ($attributes) {
+            $deliveryAgent->update($attributes);
+        });
+    }
 }

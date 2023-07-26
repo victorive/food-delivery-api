@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1\User;
 
+use App\Events\OrderItemStatusUpdated;
 use App\Http\Controllers\Controller;
 use App\Services\V1\User\Auth\OrderItemService;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -39,6 +40,8 @@ class OrderItemController extends Controller
 
         $acceptedOrder = $this->orderItemService->acceptOrderItem($orderItemUlid);
 
+        OrderItemStatusUpdated::dispatch($acceptedOrder);
+
         return response()->json([
             'status' => true,
             'message' => 'Order accepted',
@@ -56,6 +59,8 @@ class OrderItemController extends Controller
         $this->authorize('update', $order);
 
         $rejectedOrder = $this->orderItemService->rejectOrderItem($orderItemUlid);
+
+        OrderItemStatusUpdated::dispatch($rejectedOrder);
 
         return response()->json([
             'status' => true,

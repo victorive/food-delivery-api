@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Events\OrderCreated;
+use App\Events\OrderItemStatusUpdated;
 use App\Listeners\SendOrderCreatedMailNotification;
+use App\Listeners\SendOrderItemStatusUpdatedPushNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 
@@ -17,6 +19,9 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         OrderCreated::class => [
             SendOrderCreatedMailNotification::class,
+        ],
+        OrderItemStatusUpdated::class => [
+            SendOrderItemStatusUpdatedPushNotification::class,
         ],
     ];
 

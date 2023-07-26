@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\MenuAvailabilityStatus;
 use App\Traits\Ulid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -27,7 +26,7 @@ class Menu extends Model
     ];
 
     protected $casts = [
-        'is_available' => MenuAvailabilityStatus::class
+        'is_available' => 'boolean'
     ];
 
     public function restaurant(): BelongsTo

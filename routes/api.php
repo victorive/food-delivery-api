@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\CityController;
 use App\Http\Controllers\Api\V1\CountryController;
 use App\Http\Controllers\Api\V1\StateController;
+use App\Http\Controllers\Api\V1\User\Auth\DeviceTokenController;
 use App\Http\Controllers\Api\V1\User\Auth\LoginController;
 use App\Http\Controllers\Api\V1\User\Auth\LogoutController;
 use App\Http\Controllers\Api\V1\User\Auth\RegisterController;
@@ -31,6 +32,8 @@ Route::prefix('customer')->group(function () {
 
     Route::middleware('auth:customer')->group(function () {
 
+        Route::patch('device-token', [DeviceTokenController::class, 'updateCustomerDeviceToken']);
+
         Route::get('restaurants', [RestaurantController::class, 'getRestaurants']);
         Route::get('restaurants/{restaurant_ulid}/menus', [RestaurantController::class, 'getRestaurantMenus']);
 
@@ -45,6 +48,8 @@ Route::prefix('restaurant')->group(function () {
     Route::post('logout', LogoutController::class);
 
     Route::middleware('auth:restaurant')->group(function () {
+
+        Route::patch('device-token', [DeviceTokenController::class, 'updateRestaurantDeviceToken']);
 
         Route::prefix('menus')->group(function () {
             Route::get('/', [MenuController::class, 'getMenuItems']);
@@ -68,6 +73,7 @@ Route::prefix('delivery-agent')->group(function () {
     Route::post('logout', LogoutController::class);
 
     Route::middleware('auth:delivery-agent')->group(function () {
+        Route::patch('device-token', [DeviceTokenController::class, 'updateDeliveryAgentDeviceToken']);
     });
 });
 

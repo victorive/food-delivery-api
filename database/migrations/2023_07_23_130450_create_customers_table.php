@@ -21,6 +21,7 @@ return new class extends Migration {
             $table->foreignId('country_id')->constrained('countries');
             $table->foreignId('state_id')->constrained('states');
             $table->foreignId('city_id')->constrained('cities');
+            $table->string('device_token')->nullable();
             $table->timestamps();
         });
     }

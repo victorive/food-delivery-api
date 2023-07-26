@@ -2,7 +2,6 @@
 
 namespace App\Repositories\Eloquent;
 
-use App\Enums\MenuAvailabilityStatus;
 use App\Models\Menu;
 use App\Repositories\Contracts\MenuRepository;
 

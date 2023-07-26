@@ -56,4 +56,11 @@ class RestaurantRepositoryEloquent implements RestaurantRepository
 
         return $restaurant?->orderItems;
     }
+
+    public function update(array $attributes, $restaurantId)
+    {
+        return tap($this->findById($restaurantId), function ($restaurant) use ($attributes) {
+            $restaurant->update($attributes);
+        });
+    }
 }
