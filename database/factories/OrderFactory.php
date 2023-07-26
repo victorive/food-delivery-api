@@ -28,7 +28,7 @@ class OrderFactory extends Factory
             'delivery_agent_id' => fake()->randomElement($deliveryAgentIds),
             'total_amount' => fake()->randomFloat(2),
             'payment_method_id' => fake()->randomElement($paymentMethodIds),
-            'status' => fake()->numberBetween(0, 2),
+            'delivery_status' => fake()->numberBetween(0, 4),
         ];
     }
 }

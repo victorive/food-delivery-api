@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use ErrorException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -47,6 +48,12 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (QueryException $exception) {
+            return response()->json([
+                'message' => 'An error occurred. Please try again.'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        });
+
+        $this->renderable(function (ErrorException $exception) {
             return response()->json([
                 'message' => 'An error occurred. Please try again.'
             ], Response::HTTP_INTERNAL_SERVER_ERROR);

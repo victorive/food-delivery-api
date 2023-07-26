@@ -26,6 +26,7 @@ class DeliveryAgent extends Authenticatable implements JWTSubject
 
 
     protected $hidden = [
+        'id',
         'password',
     ];
 

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('delivery_agent_id')->nullable()->constrained('delivery_agents');
             $table->decimal('total_amount', 14, 2)->default(0);
             $table->foreignId('payment_method_id')->default(1)->constrained('payment_methods');
-            $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('delivery_status')->default(0);
             $table->timestamps();
         });
     }

@@ -2,32 +2,41 @@
 
 namespace App\Models;
 
-use App\Traits\Ulid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class Restaurant extends Authenticatable implements JWTSubject
+class Admin extends Authenticatable implements JWTSubject
 {
-    use HasFactory, Ulid;
+    use HasApiTokens, HasFactory, Notifiable;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
         'name',
         'email',
         'password',
-        'phone',
-        'address',
-        'country_id',
-        'state_id',
-        'city_id',
     ];
 
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
     protected $hidden = [
-        'id',
         'password',
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
     protected $casts = [
         'password' => 'hashed',
     ];
@@ -40,10 +49,5 @@ class Restaurant extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
-    }
-
-    public function menus(): HasMany
-    {
-        return $this->hasMany(Menu::class);
     }
 }

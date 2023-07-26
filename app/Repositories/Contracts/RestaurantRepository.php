@@ -4,7 +4,7 @@ namespace App\Repositories\Contracts;
 
 interface RestaurantRepository
 {
-    public function all();
+    public function all(int $perPage, string $country, string $state, string $city);
 
     public function create(array $attributes);
 

@@ -8,7 +8,7 @@ use App\Repositories\Contracts\RestaurantRepository;
 class RestaurantRepositoryEloquent implements RestaurantRepository
 {
 
-    public function all(string $country = null, string $state = null, string $city = null)
+    public function all(int $perPage, string $country = null, string $state = null, string $city = null)
     {
         $query = Restaurant::query()
             ->join('countries', 'restaurants.country_id', '=', 'countries.id')
@@ -27,7 +27,7 @@ class RestaurantRepositoryEloquent implements RestaurantRepository
             $query->where('cities.name', 'LIKE', '%' . $city . '%');
         }
 
-        return $query->select('restaurants.*')->get();
+        return $query->select('restaurants.*')->paginate($perPage);
     }
 
     public function create(array $attributes)

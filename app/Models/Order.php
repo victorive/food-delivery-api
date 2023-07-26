@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\OrderDeliveryStatus;
 use App\Traits\Ulid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +18,15 @@ class Order extends Model
         'delivery_agent_id',
         'total_amount',
         'payment_method_id',
-        'status'
+        'delivery_status'
+    ];
+
+    protected $casts = [
+        'delivery_status' => OrderDeliveryStatus::class
+    ];
+
+    protected $hidden = [
+        'id',
     ];
 
     public function orderItems(): HasMany

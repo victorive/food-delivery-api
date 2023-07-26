@@ -1,11 +1,14 @@
 <?php
 
-use App\Http\Controllers\Api\V1\Auth\LoginController;
-use App\Http\Controllers\Api\V1\Auth\LogoutController;
-use App\Http\Controllers\Api\V1\Auth\RegisterController;
-use App\Http\Controllers\Api\V1\MenuController;
-use App\Http\Controllers\Api\V1\OrderController;
-use App\Http\Controllers\Api\V1\RestaurantController;
+use App\Http\Controllers\Api\V1\CityController;
+use App\Http\Controllers\Api\V1\CountryController;
+use App\Http\Controllers\Api\V1\StateController;
+use App\Http\Controllers\Api\V1\User\Auth\LoginController;
+use App\Http\Controllers\Api\V1\User\Auth\LogoutController;
+use App\Http\Controllers\Api\V1\User\Auth\RegisterController;
+use App\Http\Controllers\Api\V1\User\MenuController;
+use App\Http\Controllers\Api\V1\User\OrderController;
+use App\Http\Controllers\Api\V1\User\RestaurantController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,7 +31,7 @@ Route::prefix('customer')->group(function () {
     Route::middleware('auth:customer')->group(function () {
 
         Route::get('restaurants', [RestaurantController::class, 'getRestaurants']);
-        Route::get('restaurants/{ulid}/menu', [RestaurantController::class, 'getRestaurantMenu']);
+        Route::get('restaurants/{ulid}/menus', [RestaurantController::class, 'getRestaurantMenu']);
 
         Route::post('order', [OrderController::class, 'createOrder']);
     });
@@ -42,11 +45,11 @@ Route::prefix('restaurant')->group(function () {
 
     Route::middleware('auth:restaurant')->group(function () {
 
-        Route::prefix('menu-item')->group(function () {
+        Route::prefix('menus')->group(function () {
             Route::get('/', [MenuController::class, 'getMenuItems']);
             Route::post('/', [MenuController::class, 'createMenuItem']);
-            Route::put('{ulid}', [MenuController::class, 'updateMenuItem']);
-            Route::delete('{ulid}', [MenuController::class, 'deleteMenuItem']);
+            Route::put('{menu_ulid}', [MenuController::class, 'updateMenuItem']);
+            Route::delete('{menu_ulid}', [MenuController::class, 'deleteMenuItem']);
         });
     });
 });
@@ -60,3 +63,7 @@ Route::prefix('delivery-agent')->group(function () {
     Route::middleware('auth:delivery-agent')->group(function () {
     });
 });
+
+Route::get('countries', CountryController::class);
+Route::get('states', StateController::class);
+Route::get('cities', CityController::class);

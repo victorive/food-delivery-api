@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Eloquent;
 
+use App\Enums\MenuAvailability;
 use App\Models\Menu;
 use App\Repositories\Contracts\MenuRepository;
 
@@ -10,7 +11,9 @@ class MenuRepositoryEloquent implements MenuRepository
 
     public function all(int $restaurantId, int $perPage)
     {
-        return Menu::query()->where('restaurant_id', $restaurantId)->paginate($perPage);
+        return Menu::query()->where('restaurant_id', $restaurantId)
+            ->where('is_available', MenuAvailability::IN_STOCK->value)
+            ->paginate($perPage);
     }
 
     public function create(array $attributes)
