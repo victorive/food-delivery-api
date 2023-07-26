@@ -71,7 +71,7 @@ class RestaurantTest extends TestCase
         $menuItem = Menu::factory()->create(['restaurant_id' => $restaurant->id]);
 
         $this->withToken(JWTAuth::fromUser($this->customer))
-            ->get($this->url . '/' . $restaurant->ulid . '/menu')
+            ->get($this->url . '/' . $restaurant->ulid . '/menus')
             ->assertOk()
             ->assertJsonFragment([
                 'name' => $menuItem->name,

@@ -12,6 +12,13 @@ class CountryController extends Controller
     {
         $countries = Country::all();
 
+        if (!$countries) {
+            return response()->json([
+                'status' => true,
+                'message' => 'No country found',
+            ], Response::HTTP_OK);
+        }
+
         return response()->json([
             'status' => true,
             'message' => 'Countries retrieved successfully',

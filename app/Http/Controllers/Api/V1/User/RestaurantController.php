@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\User;
 
 use App\Http\Controllers\Controller;
 use App\Services\V1\User\RestaurantService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -12,7 +13,7 @@ class RestaurantController extends Controller
     public function __construct(private RestaurantService $restaurantService)
     {
     }
-    public function getRestaurants(Request $request)
+    public function getRestaurants(Request $request): JsonResponse
     {
         $perPage = $request->query('perPage', 15);
 
@@ -22,6 +23,13 @@ class RestaurantController extends Controller
 
         $restaurants = $this->restaurantService->getRestaurantsByArea($perPage, $country, $state, $city);
 
+        if (!$restaurants) {
+            return response()->json([
+                'status' => true,
+                'message' => 'No restaurant found',
+            ], Response::HTTP_OK);
+        }
+
         return response()->json([
             'status' => true,
             'message' => 'Restaurants retrieved successfully',
@@ -29,10 +37,24 @@ class RestaurantController extends Controller
         ], Response::HTTP_OK);
     }
 
-    public function getRestaurantMenu(Request $request, string $ulid)
+    public function getRestaurantMenus(Request $request, string $restaurantUlid): JsonResponse
     {
         $perPage = $request->query('perPage', 15);
 
-        return $this->restaurantService->getRestaurantMenu($ulid, $perPage);
+        $restaurantMenus =  $this->restaurantService->getRestaurantMenus($restaurantUlid, $perPage);
+
+        if (!$restaurantMenus) {
+            return response()->json([
+                'status' => true,
+                'message' => 'No menu found',
+            ], Response::HTTP_OK);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Restaurant menus retrieved successfully',
+            'data' => $restaurantMenus,
+        ], Response::HTTP_OK);
+
     }
 }

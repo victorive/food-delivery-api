@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use App\Enums\MenuAvailability;
+use App\Enums\MenuAvailabilityStatus;
 use App\Traits\Ulid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Menu extends Model
 {
@@ -26,11 +27,16 @@ class Menu extends Model
     ];
 
     protected $casts = [
-        'is_available' => MenuAvailability::class
+        'is_available' => MenuAvailabilityStatus::class
     ];
 
     public function restaurant(): BelongsTo
     {
         return $this->belongsTo(Restaurant::class);
+    }
+
+    public function orderItems(): HasMany
+    {
+        return $this->hasMany(OrderItem::class);
     }
 }

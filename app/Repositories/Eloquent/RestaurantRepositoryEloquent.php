@@ -7,7 +7,6 @@ use App\Repositories\Contracts\RestaurantRepository;
 
 class RestaurantRepositoryEloquent implements RestaurantRepository
 {
-
     public function all(int $perPage, string $country = null, string $state = null, string $city = null)
     {
         $query = Restaurant::query()
@@ -35,14 +34,26 @@ class RestaurantRepositoryEloquent implements RestaurantRepository
         return Restaurant::query()->create($attributes);
     }
 
+    public function findById(int $restaurantId)
+    {
+        return Restaurant::query()->find($restaurantId);
+    }
+
     public function findByUlid(string $restaurantUlid)
     {
         return Restaurant::query()->where('ulid', $restaurantUlid)->first();
     }
 
-    public function getRestaurantMenu(string $restaurantUlid, int $perPage)
+    public function getRestaurantMenus(string $restaurantUlid, int $perPage)
     {
         return Restaurant::query()->where('ulid', $restaurantUlid)
             ->with('menus')->paginate($perPage);
+    }
+
+    public function getRestaurantOrderItems(int $restaurantId)
+    {
+        $restaurant = $this->findById($restaurantId);
+
+        return $restaurant?->orderItems;
     }
 }

@@ -32,8 +32,8 @@ class DeliveryAgent extends Authenticatable implements JWTSubject
 
     protected $casts = [
         'password' => 'hashed',
+        'is_available' => 'boolean',
     ];
-
 
     public function getJWTIdentifier()
     {

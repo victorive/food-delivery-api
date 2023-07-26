@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\User\Auth\LogoutController;
 use App\Http\Controllers\Api\V1\User\Auth\RegisterController;
 use App\Http\Controllers\Api\V1\User\MenuController;
 use App\Http\Controllers\Api\V1\User\OrderController;
+use App\Http\Controllers\Api\V1\User\OrderItemController;
 use App\Http\Controllers\Api\V1\User\RestaurantController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,7 +32,7 @@ Route::prefix('customer')->group(function () {
     Route::middleware('auth:customer')->group(function () {
 
         Route::get('restaurants', [RestaurantController::class, 'getRestaurants']);
-        Route::get('restaurants/{ulid}/menus', [RestaurantController::class, 'getRestaurantMenu']);
+        Route::get('restaurants/{restaurant_ulid}/menus', [RestaurantController::class, 'getRestaurantMenus']);
 
         Route::post('order', [OrderController::class, 'createOrder']);
     });
@@ -50,6 +51,12 @@ Route::prefix('restaurant')->group(function () {
             Route::post('/', [MenuController::class, 'createMenuItem']);
             Route::put('{menu_ulid}', [MenuController::class, 'updateMenuItem']);
             Route::delete('{menu_ulid}', [MenuController::class, 'deleteMenuItem']);
+        });
+
+        Route::prefix('orders')->group(function () {
+            Route::get('/', [OrderItemController::class, 'getRestaurantOrderItems']);
+            Route::patch('/{order_item_ulid}/accept', [OrderItemController::class, 'acceptOrderItem']);
+            Route::patch('/{order_item_ulid}/reject', [OrderItemController::class, 'rejectOrderItem']);
         });
     });
 });

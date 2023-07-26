@@ -4,7 +4,9 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 use App\Models\Menu;
-use App\Policies\V1\MenuPolicy;
+use App\Models\OrderItem;
+use App\Policies\MenuPolicy;
+use App\Policies\OrderItemPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -15,7 +17,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        Menu::class => MenuPolicy::class
+        Menu::class => MenuPolicy::class,
+        OrderItem::class => OrderItemPolicy::class
     ];
 
     /**

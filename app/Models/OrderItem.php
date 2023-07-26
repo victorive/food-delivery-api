@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use App\Enums\OrderItemConfirmationStatus;
+use App\Traits\Ulid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class OrderItem extends Model
 {
-    use HasFactory;
+    use HasFactory, Ulid;
 
     public $timestamps = false;
 
@@ -19,6 +21,14 @@ class OrderItem extends Model
         'quantity',
         'amount',
         'confirmation_status',
+    ];
+
+    protected $hidden = [
+        'id',
+    ];
+
+    protected $casts = [
+        'confirmation_status' => OrderItemConfirmationStatus::class
     ];
 
     public function order(): BelongsTo

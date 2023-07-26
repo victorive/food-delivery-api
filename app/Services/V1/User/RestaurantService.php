@@ -15,8 +15,8 @@ class RestaurantService
         return $this->restaurantRepository->all($perPage, $country, $state, $city);
     }
 
-    public function getRestaurantMenu(string $restaurantUlid, int $perPage)
+    public function getRestaurantMenus(string $restaurantUlid, int $perPage)
     {
-        return $this->restaurantRepository->getRestaurantMenu($restaurantUlid, $perPage);
+        return $this->restaurantRepository->getRestaurantMenus($restaurantUlid, $perPage);
     }
 }

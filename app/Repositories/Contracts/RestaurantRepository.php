@@ -8,7 +8,11 @@ interface RestaurantRepository
 
     public function create(array $attributes);
 
+    public function findById(int $restaurantId);
+
     public function findByUlid(string $restaurantUlid);
 
-    public function getRestaurantMenu(string $restaurantUlid, int $perPage);
+    public function getRestaurantMenus(string $restaurantUlid, int $perPage);
+
+    public function getRestaurantOrderItems(int $restaurantId);
 }

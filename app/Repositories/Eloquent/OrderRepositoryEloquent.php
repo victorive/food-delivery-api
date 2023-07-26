@@ -14,8 +14,8 @@ class OrderRepositoryEloquent implements OrderRepository
 
     public function update(array $attributes, string $orderUlid)
     {
-        return tap($this->findByUlId($orderUlid), function () use ($attributes, $orderUlid) {
-            Order::query()->where('ulid', $orderUlid)->update($attributes);
+        return tap($this->findByUlId($orderUlid), function ($order) use ($attributes) {
+            $order->update($attributes);
         });
     }
 

@@ -53,13 +53,13 @@ class MenuController extends Controller
     /**
      * @throws AuthorizationException
      */
-    public function updateMenuItem(MenuRequest $request, string $ulid): JsonResponse
+    public function updateMenuItem(MenuRequest $request, string $menuUlid): JsonResponse
     {
-        $item = $this->menuService->findMenuItemByUlid($ulid);
+        $item = $this->menuService->findMenuItemByUlid($menuUlid);
 
         $this->authorize('update', $item);
 
-        $menuItem = $this->menuService->updateMenuItem($request->validated(), $ulid);
+        $menuItem = $this->menuService->updateMenuItem($request->validated(), $menuUlid);
 
         return response()->json([
             'status' => true,
@@ -71,13 +71,13 @@ class MenuController extends Controller
     /**
      * @throws AuthorizationException
      */
-    public function deleteMenuItem(string $ulid): JsonResponse
+    public function deleteMenuItem(string $menuUlid): JsonResponse
     {
-        $item = $this->menuService->findMenuItemByUlid($ulid);
+        $item = $this->menuService->findMenuItemByUlid($menuUlid);
 
         $this->authorize('delete', $item);
 
-        $this->menuService->deleteMenuItem($ulid);
+        $this->menuService->deleteMenuItem($menuUlid);
 
         return response()->json([
             'status' => true,

@@ -12,13 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('order_items', function (Blueprint $table) {
+            $table->id();
+            $table->ulid()->index();
             $table->foreignId('order_id')->constrained('orders');
             $table->foreignId('restaurant_id')->constrained('restaurants');
             $table->foreignId('menu_id')->constrained('menus');
             $table->integer('quantity');
             $table->decimal('amount', 14, 2);
-
-            $table->primary(['order_id', 'restaurant_id', 'menu_id']);
+            $table->tinyInteger('confirmation_status')->default(0);
         });
     }
 

@@ -7,6 +7,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -57,6 +58,12 @@ class Handler extends ExceptionHandler
             return response()->json([
                 'message' => 'An error occurred. Please try again.'
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        });
+
+        $this->renderable(function (AccessDeniedHttpException $exception) {
+            return response()->json([
+                'message' => 'This action is unauthorized'
+            ], Response::HTTP_FORBIDDEN);
         });
     }
 }

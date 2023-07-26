@@ -12,6 +12,13 @@ class StateController extends Controller
     {
         $states = State::all();
 
+        if (!$states) {
+            return response()->json([
+                'status' => true,
+                'message' => 'No state found',
+            ], Response::HTTP_OK);
+        }
+
         return response()->json([
             'status' => true,
             'message' => 'States retrieved successfully',

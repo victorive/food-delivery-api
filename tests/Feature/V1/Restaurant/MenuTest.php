@@ -9,7 +9,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class MenuTest extends TestCase
 {
-    private string $url = 'api/v1/restaurant/menu-item';
+    private string $url = 'api/v1/restaurant/menus';
 
     private $restaurant;
 

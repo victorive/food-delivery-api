@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\OrderDeliveryStatus;
+use App\Enums\PaymentMethodType;
 use App\Traits\Ulid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,7 +23,8 @@ class Order extends Model
     ];
 
     protected $casts = [
-        'delivery_status' => OrderDeliveryStatus::class
+        'payment_method_id' => PaymentMethodType::class,
+        'delivery_status' => OrderDeliveryStatus::class,
     ];
 
     protected $hidden = [
@@ -39,12 +41,10 @@ class Order extends Model
         return $this->belongsTo(Customer::class);
     }
 
-
     public function deliveryAgent(): BelongsTo
     {
         return $this->belongsTo(DeliveryAgent::class);
     }
-
 
     public function paymentMethod(): BelongsTo
     {

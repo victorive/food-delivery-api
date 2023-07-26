@@ -13,7 +13,7 @@ class MenuService
 
     public function getMenuItems(int $restaurantId, int $perPage)
     {
-        return $this->menuRepository->all($restaurantId, $perPage);
+        return $this->menuRepository->findByRestaurantId($restaurantId, $perPage);
     }
 
     public function createMenuItem(array $formData, int $restaurantId)

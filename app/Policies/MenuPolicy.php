@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Policies\V1;
+namespace App\Policies;
 
 use App\Models\Menu;
 use App\Models\Restaurant;
